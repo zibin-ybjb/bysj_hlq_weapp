@@ -1,27 +1,27 @@
 export default defineAppConfig({
   pages: [
-    'pages/index/index',
-    "pages/publish/publish",
-    "pages/my/my",
-    "pages/published/published"
+    'tab-pages/index/index',
+    "tab-pages/published/index",
+    "tab-pages/my/index",
 
+    "pages/publish/index",
   ],
   tabBar: {
-    "custom": true,
-    "backgroundColor":"#538ce9",
+    // "custom": true,
+    // "backgroundColor":"#538ce9",
     "color": "#7A7E83",
     "selectedColor": "#3cc51f",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "tab-pages/index/index",
         "text": "首页"
       },
       {
-        "pagePath": "pages/published/published",
+        "pagePath": "tab-pages/published/index",
         "text": "发布"
       },
       {
-        "pagePath": "pages/my/my",
+        "pagePath": "tab-pages/my/index",
         "text": "我的"
       }
     ]

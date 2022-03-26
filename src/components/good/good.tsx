@@ -1,14 +1,16 @@
 import { View, Image } from "@tarojs/components";
-import './good.scss'
-export default function Good({ pic,des }) {
+import styles from './good.module.scss'
+export default function Good({ img,content }) {
   return (
-    <View className="container">
+    <View className={styles.container}>
       <Image
-        className="pic"
-        src={pic}
+        className={styles.img}
+        lazyLoad
+        mode="aspectFill"
+        src={img}
+        // placeholder="加载中..."
       />
-      1111111
-      <View className="des">{des}</View>
+      <View className={styles.content}>{content}</View>
     </View>
   );
 };
