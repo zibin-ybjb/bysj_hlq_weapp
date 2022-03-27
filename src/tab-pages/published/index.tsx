@@ -17,7 +17,11 @@ export default function Published() {
         setGoods(res.data);
       });
   });
-
+  const toDetails = (goodId: any) => {
+    navigateTo({
+      url: `../../pages/goodDetail/index?goodId=${goodId}`,
+    });
+  };
   const pubilsh = () => {
     navigateTo({
       url: "../../pages/publish/index",
@@ -26,10 +30,23 @@ export default function Published() {
 
   return (
     <View className="container">
-      {goods.length > 0 && goods.map(({ img, content }) => {
-        return <Good img={img} content={content}></Good>;
-      })}
-      <Button className = 'button' onClick={pubilsh}>发布</Button>
+      {goods.length > 0 &&
+        goods.map(({ img, goodId, content }) => {
+          return (
+            <View onClick={() => toDetails(goodId)}>
+              <Good img={img[0]} content={content}></Good>
+            </View>
+          );
+        })}
+      <Button
+        className="button"
+        variant="contained"
+        color="primary"
+        shape="round"
+        onClick={pubilsh}
+      >
+        发布
+      </Button>
     </View>
   );
 }

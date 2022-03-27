@@ -5,6 +5,7 @@ export default defineAppConfig({
     "tab-pages/my/index",
 
     "pages/publish/index",
+    "pages/goodDetail/index",
   ],
   tabBar: {
     // "custom": true,
@@ -30,7 +31,8 @@ export default defineAppConfig({
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
+    navigationBarTextStyle: 'black',
+    "navigationStyle":"default"
   },
   usingComponents:{}
 })

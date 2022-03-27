@@ -1,5 +1,10 @@
 .container{
+    position: absolute;
     padding:50px;
+    .cancel{
+        position: absolute;
+        left: 8Px;
+    }
     .desc{
         height: 50px;
         margin-bottom: 50px;
