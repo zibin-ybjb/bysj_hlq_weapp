@@ -1,20 +1,25 @@
-import { ADD, MINUS } from '../constants/counter'
+import { FIRST, SECOND, THIRD } from '../constants/tabbar'
 
 const INITIAL_STATE = {
-  num: 0
+  current: 0
 }
 
-export default function counter (state = INITIAL_STATE, action) {
+export default function tabbar (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD:
+    case FIRST:
       return {
         ...state,
-        num: state.num + 1
+        current: 0
       }
-    case MINUS:
+    case SECOND:
       return {
         ...state,
-        num: state.num - 1
+        current: 1
+      }
+    case THIRD:
+      return {
+        ...state,
+        current: 2
       }
     default:
       return state

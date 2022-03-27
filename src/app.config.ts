@@ -1,3 +1,5 @@
+
+import { useGlobalIconFont } from './components/iconfont/helper';
 export default defineAppConfig({
   pages: [
     'tab-pages/index/index',
@@ -8,7 +10,7 @@ export default defineAppConfig({
     "pages/goodDetail/index",
   ],
   tabBar: {
-    // "custom": true,
+    "custom": true,
     // "backgroundColor":"#538ce9",
     "color": "#7A7E83",
     "selectedColor": "#3cc51f",
@@ -34,5 +36,7 @@ export default defineAppConfig({
     navigationBarTextStyle: 'black',
     "navigationStyle":"default"
   },
-  usingComponents:{}
+  usingComponents:{
+    ...Object.assign(useGlobalIconFont())
+  }
 })
