@@ -1,0 +1,8 @@
+$tab-selected-color: #5463FF;
+$tab-color: #ECECEC;
+
+
+.global__fix_tabbar {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+}
+  

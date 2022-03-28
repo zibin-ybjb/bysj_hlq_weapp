@@ -29,7 +29,7 @@ export default function Published() {
   };
 
   return (
-    <View className="container">
+    <View className="container global__fix_tabbar">
       {goods.length > 0 &&
         goods.map(({ img, goodId, content }) => {
           return (

@@ -23,7 +23,7 @@ export default function Index() {
 
   })
   return (
-    <View className="index">
+    <View className="index global__fix_tabbar">
       <Text>Hello world!</Text>
     </View>
   );
