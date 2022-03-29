@@ -12,7 +12,7 @@ const db = Taro.cloud.database();
 
 export default function Publish() {
   const [files, setFiles] = useState<Uploader.File[]>([]);
-  const [content, setContent] = useState("这是我新买的，还没怎么用");
+  const [content, setContent] = useState("");
   const [positon, setPosition] = useState({});
   useDidShow(() => {
   //   const { top } = Taro.getMenuButtonBoundingClientRect();
@@ -90,6 +90,7 @@ export default function Publish() {
             complete: () => {
               setFiles([]);
               setContent("");
+              Taro.navigateBack();
             },
           });
         });
@@ -127,7 +128,7 @@ export default function Publish() {
         <Textarea
           className="desc"
           autoHeight
-          placeholder="请输入留言"
+          placeholder="请输入描述"
           value={content}
           onChange={(e) => setContent(e.detail.value)}
         />
@@ -137,15 +138,14 @@ export default function Publish() {
           onUpload={onUpload}
           onChange={setFiles}
         />
-        {/* <Button
+        <Button
         size="large"
         shape="round"
-        color="primary"
         className="button"
-       
+        onClick={sendFile}
       >
         发布
-      </Button> */}
+      </Button>
       </View>
     </>
   );

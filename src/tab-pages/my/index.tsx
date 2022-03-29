@@ -1,25 +1,41 @@
-import { View, Text } from "@tarojs/components";
-import Taro from "@tarojs/taro";
-import { useEffect } from "react";
+import { View, Text, Image } from "@tarojs/components";
+import Taro, { useDidShow , useReady } from "@tarojs/taro";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar } from "@taroify/core";
+import { UserInfo } from "src/pages/login";
+
+import UserInfoShow from "../../components/userinfo/index";
+
+import "./index.scss";
 
 export default function my(props) {
-  useEffect(() => {
-    Taro.cloud
-      .callFunction({
-        name: "good",
-        data: {
-          abc: 1,
-          adc: 2,
-        },
-      })
-      .then((res) => {
+  const dispatch = useDispatch();
+  const { isLogin } = useSelector((state) => state.user);
+  const [userInfo, serUserInfo] = useState<UserInfo>();
+  const [positon, setPosition] = useState({});
+  useDidShow(() => {
+      dispatch({ type: "THIRD" });
+    setPosition(Taro.getMenuButtonBoundingClientRect());
+    // 如果是登录的状态或者本地存储中有，就读
+    if (isLogin || Taro.getStorageSync("userInfo")) {
+      Taro.getStorage({
+        key: "userInfo",
+      }).then((res) => {
+        serUserInfo(res.data);
         console.log(res);
-      })
-      .catch(console.error);
+      });
+    } else {
+      Taro.redirectTo({
+        url: "../../pages/login/index",
+      });
+    }
   });
   return (
-    <View className="index global__fix_tabbar">
-      <Text>Hello world!</Text>
+    <View
+      className="container global__fix_tabbar "
+    >
+      {userInfo && <UserInfoShow userInfo={userInfo}></UserInfoShow>}
     </View>
   );
 }

@@ -1,17 +1,21 @@
 import { Button } from "@taroify/core";
-import Taro, { navigateTo, useDidShow } from "@tarojs/taro";
+import Taro, { navigateTo, useDidShow, useReady } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { useState } from "react";
 import Good from "../../components/good/good";
 import "./index.scss";
+import { useDispatch } from "react-redux";
 const db = Taro.cloud.database();
 
 export default function Published() {
   const [goods, setGoods] = useState(new Array());
-
+  const dispatch = useDispatch();
   useDidShow(() => {
+    dispatch({ type: "SECOND" });
+
     db.collection("goods")
-      .orderBy("createTime", "asc")
+      .skip(0)
+      .orderBy("createTime", "desc")
       .get()
       .then((res) => {
         setGoods(res.data);

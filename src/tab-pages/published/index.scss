@@ -6,6 +6,6 @@
         position: fixed;
         height: 24Px;
         right: 20px;
-        bottom: 114px;
+        bottom: calc(120px + env(safe-area-inset-bottom));
     }
 }

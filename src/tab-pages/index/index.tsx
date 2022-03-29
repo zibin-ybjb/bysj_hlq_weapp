@@ -1,10 +1,22 @@
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
-import Taro, { useDidShow } from "@tarojs/taro";
+import Taro, { useDidShow, useReady } from "@tarojs/taro";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Index() {
+  const { isLogin } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useDidShow(() => {
+    dispatch({ type: "FIRST" });
+    console.log(isLogin);
+    if(!isLogin){
+      Taro.redirectTo({
+        url:'../../pages/login/index'
+      })
+    }
+  });
   useEffect(() => {
     Taro.cloud
       .callFunction({
@@ -15,15 +27,13 @@ export default function Index() {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(console.error);
   });
-  useDidShow(() => {
 
-  })
   return (
-    <View className="index global__fix_tabbar">
+    <View className="container global__fix_tabbar">
       <Text>Hello world!</Text>
     </View>
   );

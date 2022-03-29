@@ -23,6 +23,12 @@
                     "pathName": "tab-pages/published/index",
                     "query": "",
                     "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "tab-pages/my/index",
+                    "query": "",
+                    "scene": null
                 }
             ]
         }

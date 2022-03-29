@@ -2,19 +2,16 @@ import { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { CoverView, Image, Button, View } from "@tarojs/components";
 import { useSelector, useDispatch } from "react-redux";
-import IconFont from "../components/iconfont";
-import indexIcon from '../static/image/index.svg';
-import indexIcons from '../static/image/index-selected.svg';
-import myIcon from '../static/image/my.svg';
-import myIcons from '../static/image/my-selected.svg';
-import publishedIcon from '../static/image/published.svg';
-import publishedIcons from '../static/image/published-selected.svg';
 
-
-
+import indexIcon from "../static/image/index.svg";
+import indexIcons from "../static/image/index-selected.svg";
+import myIcon from "../static/image/my.svg";
+import myIcons from "../static/image/my-selected.svg";
+import publishedIcon from "../static/image/published.svg";
+import publishedIcons from "../static/image/published-selected.svg";
 
 import "./index.scss";
-const color = "#ececec";
+const color = "#000000";
 const selectedColor = "#5463FF";
 const tabs = ["FIRST", "SECOND", "THIRD"];
 const list = [
@@ -40,9 +37,8 @@ const list = [
 
 export default () => {
   const { current } = useSelector((state) => state.tabbar);
-  const dispatch = useDispatch();
-  const switchTab = (index, url) => {
-    dispatch({ type: tabs[index] });
+
+  const switchTab = (url) => {
     Taro.switchTab({ url });
   };
 
@@ -54,15 +50,15 @@ export default () => {
           <View
             key={index}
             className="tab-bar-item"
-            onClick={() => switchTab(index, item.pagePath)}
+            onClick={() => switchTab(item.pagePath)}
           >
             <Image
-            // src={png}
-              src={ index == current ? item.selectedIconPath : item.iconPath}
+              // src={png}
+              src={index == current ? item.selectedIconPath : item.iconPath}
             />
-            <View style={{ color: index == current ? selectedColor : color }}>
+            {/* <View style={{ color: index == current ? selectedColor : color }}>
               {item.text}
-            </View>
+            </View> */}
           </View>
         );
       })}
