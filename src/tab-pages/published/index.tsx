@@ -5,7 +5,6 @@ import { useState } from "react";
 import Good from "../../components/good/good";
 import "./index.scss";
 import { useDispatch } from "react-redux";
-const db = Taro.cloud.database();
 
 export default function Published() {
   const [goods, setGoods] = useState(new Array());
@@ -13,13 +12,15 @@ export default function Published() {
   useDidShow(() => {
     dispatch({ type: "SECOND" });
 
-    db.collection("goods")
-      .skip(0)
-      .orderBy("createTime", "desc")
-      .get()
-      .then((res) => {
-        setGoods(res.data);
-      });
+    Taro.cloud.callFunction({
+      name:'getgoodlist',
+      data:{
+        start:0,
+        count:20
+      }
+    }).then((res)=>{
+      setGoods(res.result.data);
+    })
   });
   const toDetails = (goodId: any) => {
     navigateTo({

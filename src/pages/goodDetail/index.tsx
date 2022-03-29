@@ -13,19 +13,15 @@ export default (props) => {
   const [detail, setDetail] = useState({});
   const router = useRouter();
   useDidShow(() => {
-    console.log(router.params);
-    db.collection("goods")
-      .where({
-        goodId: _.eq(router.params.goodId),
-      })
-      .get()
-      .then((res) => {
-        setDetail(res.data[0]);
-        console.log(res);
-      });
-    // console.log(a);
 
-    // setGoodId(router.params.goodId as string);
+    Taro.cloud.callFunction({
+      name:'getGoodDetail',
+      data:{
+        goodId:router.params.goodId
+      }
+    }).then((res) => {
+      setDetail(res.result.data[0]);
+    })
   });
   const previewImage = (current) => {
     Taro.previewImage({

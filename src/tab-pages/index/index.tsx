@@ -11,7 +11,7 @@ export default function Index() {
   useDidShow(() => {
     dispatch({ type: "FIRST" });
     console.log(isLogin);
-    if(!isLogin){
+    if(!isLogin && !Taro.getStorageSync("userInfo")){
       Taro.redirectTo({
         url:'../../pages/login/index'
       })
