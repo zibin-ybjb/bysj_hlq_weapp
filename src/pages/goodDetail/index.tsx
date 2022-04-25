@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Swiper, Image } from "@taroify/core";
 import Taro, { useDidShow, useRouter } from "@tarojs/taro";
 import "./index.scss";
+import Avatar from "@taroify/core/avatar/avatar";
 
 const db = Taro.cloud.database();
 const _ = db.command;
@@ -13,15 +14,18 @@ export default (props) => {
   const [detail, setDetail] = useState({});
   const router = useRouter();
   useDidShow(() => {
+    Taro.cloud
+      .callFunction({
+        name: "getGoodDetail",
+        data: {
+          goodId: router.params.goodId,
+        },
+      })
+      .then((res) => {
+        console.log(res);
 
-    Taro.cloud.callFunction({
-      name:'getGoodDetail',
-      data:{
-        goodId:router.params.goodId
-      }
-    }).then((res) => {
-      setDetail(res.result.data[0]);
-    })
+        setDetail(res.result.data[0]);
+      });
   });
   const previewImage = (current) => {
     Taro.previewImage({
@@ -32,6 +36,13 @@ export default (props) => {
 
   return (
     <View className="container">
+      <View className="container1">
+        {/* <Avatar className="avatar" src={userInfo.avatarUrl} size="large" /> */}
+        <View className="userInfo">
+          <View>{detail.nickName}</View>
+        </View>
+      </View>
+
       <Swiper autoplay={4000} onChange={setValue}>
         {detail.img?.map((current) => {
           return (
@@ -50,8 +61,6 @@ export default (props) => {
           {value + 1}/{detail.img?.length}
         </Swiper.Indicator>
       </Swiper>
-
-
     </View>
   );
 };

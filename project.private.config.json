@@ -29,6 +29,12 @@
                     "pathName": "tab-pages/my/index",
                     "query": "",
                     "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/publish/index",
+                    "query": "",
+                    "scene": null
                 }
             ]
         }

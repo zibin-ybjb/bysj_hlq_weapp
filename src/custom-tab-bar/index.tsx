@@ -53,6 +53,7 @@ export default () => {
             onClick={() => switchTab(item.pagePath)}
           >
             <Image
+            className={index == current ? 'onSelected' : ''}
               // src={png}
               src={index == current ? item.selectedIconPath : item.iconPath}
             />

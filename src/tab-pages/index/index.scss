@@ -1,0 +1,7 @@
+.container{
+    padding: 25rpx;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  
+}

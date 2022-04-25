@@ -1,7 +1,8 @@
 import { REQUESTLOGIN, REQUESTLOGINSUCCESS, REQUESTLOGINFAILURE } from '../constants/user'
+import Taro from "@tarojs/taro";
 
 const INITIAL_STATE = {
-    isLogin: false,
+    isLogin: Taro.getStorageSync("userInfo") ? true :false,
     loading: false,
     name: '',
     error: '',

@@ -1,6 +1,6 @@
 export default definePageConfig({
-    navigationBarTitleText: "发布",
+    navigationBarTitleText: "我的发布",
     usingComponents:{},
-    navigationBarBackgroundColor: "#5463FF",
+    navigationBarBackgroundColor: "#ECECEC",
 });
   

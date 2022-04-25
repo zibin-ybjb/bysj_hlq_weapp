@@ -1,12 +1,18 @@
 .tab-bar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: calc(10Px + env(safe-area-inset-bottom));
+  left: 10Px;
+  right: 10Px;
   height: 100px;
-  background: white;
+  // background: #79d2d8;
   display: flex;
-  padding-bottom: env(safe-area-inset-bottom);
+  // padding-bottom: env(safe-area-inset-bottom);
+
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.23);
+  border-radius: 50px;
+  border: 1Px solid rgba(255, 255, 255, 0.125);
 }
 
 .tab-bar-border {

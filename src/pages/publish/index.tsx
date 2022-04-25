@@ -1,24 +1,33 @@
 import { View } from "@tarojs/components";
 import { chooseImage } from "@tarojs/taro";
 import { useState } from "react";
-import { Uploader, Button, Cell, Field, Textarea } from "@taroify/core";
+import { Uploader, Button, Input, Cell, Field, Textarea } from "@taroify/core";
 import { Arrow, ArrowLeft } from "@taroify/icons";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { getUUID } from "../../utils/utils";
 
 import "./index.scss";
+import "@taroify/icons/index.scss";
+import "@taroify/core/index.scss";
 
 const db = Taro.cloud.database();
 
 export default function Publish() {
   const [files, setFiles] = useState<Uploader.File[]>([]);
   const [content, setContent] = useState("");
+  const [userInfo, setUserInfo] = useState({});
+  const [price, setPrice] = useState();
   const [positon, setPosition] = useState({});
+
   useDidShow(() => {
-  //   const { top } = Taro.getMenuButtonBoundingClientRect();
-  setPosition(Taro.getMenuButtonBoundingClientRect());
-  console.log( Taro.getMenuButtonBoundingClientRect());
-  
+    //   const { top } = Taro.getMenuButtonBoundingClientRect();
+    Taro.getStorage({
+      key: "userInfo",
+    }).then((res) => {
+      setUserInfo(res.data);
+      console.log(res);
+    });
+    setPosition(Taro.getMenuButtonBoundingClientRect());
   });
   function onUpload() {
     chooseImage({
@@ -54,6 +63,13 @@ export default function Publish() {
       });
       return;
     }
+    if (!price) {
+      Taro.showToast({
+        title: "请输入价格",
+        icon: "error",
+      });
+      return;
+    }
     files?.forEach(({ url }) => {
       let currentFile = new Promise((resolve, reject) => {
         Taro.cloud.uploadFile({
@@ -73,11 +89,14 @@ export default function Publish() {
     Taro.showLoading();
 
     Promise.all(filesList).then(() => {
+      let { _id, _openid, ...pickInfo } = userInfo;
       db.collection("goods")
         .add({
           data: {
-            // ...userInfo,
+            ...pickInfo,
             content,
+            price,
+            auditState:0,
             img: fileIds,
             goodId: getUUID(8),
             createTime: db.serverDate(), // 服务端的时间
@@ -101,30 +120,21 @@ export default function Publish() {
     <>
       <Button
         className="cancel"
-        style={{ 
-          height: `${positon.height-6}Px`,
-          top: `${positon.top-1 }Px`,
-          left:`8Px`
+        style={{
+          height: `${positon.height - 6}Px`,
+          top: `${positon.top - 1}Px`,
+          left: `30rpx`,
         }}
         shape="round"
         variant="outlined"
         onClick={() => Taro.navigateBack()}
-      >取消
-      </Button>
-      <View className="container" style={{ top: `${positon.top + positon.height}Px`}}>
-        {/* <Button.Group variant="contained" color="primary" shape="round" >
-        <Button>
-          {" "}
-          <ArrowLeft /> 取消
-        </Button>
-        <Button  onClick={sendFile}>
-          发布 <Arrow />
-        </Button>
-      </Button.Group> */}
-
-        {/* <View >
+      >
         取消
-      </View> */}
+      </Button>
+      <View
+        className="container"
+        style={{ top: `${positon.top + positon.height}Px` }}
+      >
         <Textarea
           className="desc"
           autoHeight
@@ -133,19 +143,24 @@ export default function Publish() {
           onChange={(e) => setContent(e.detail.value)}
         />
         <Uploader
+          className="uploader"
           value={files}
           multiple
           onUpload={onUpload}
           onChange={setFiles}
         />
-        <Button
-        size="large"
-        shape="round"
-        className="button"
-        onClick={sendFile}
-      >
-        发布
-      </Button>
+        <View className="input">
+          <Input
+            type="digit"
+            placeholder="请输入价格"
+            value={price}
+            onChange={(e) => setPrice(e.detail.value)}
+          />
+        </View>
+
+        <Button shape="round" className="button" onClick={sendFile}>
+          发布
+        </Button>
       </View>
     </>
   );

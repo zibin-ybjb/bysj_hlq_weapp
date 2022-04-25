@@ -6,21 +6,18 @@ import Good from "../../components/good/good";
 import "./index.scss";
 import { useDispatch } from "react-redux";
 
+const db = Taro.cloud.database();
+
 export default function Published() {
   const [goods, setGoods] = useState(new Array());
   const dispatch = useDispatch();
   useDidShow(() => {
     dispatch({ type: "SECOND" });
 
-    Taro.cloud.callFunction({
-      name:'getgoodlist',
-      data:{
-        start:0,
-        count:20
-      }
-    }).then((res)=>{
-      setGoods(res.result.data);
-    })
+    db.collection("goods").get()
+      .then((res) => {
+        setGoods(res.data);
+      });
   });
   const toDetails = (goodId: any) => {
     navigateTo({
@@ -36,22 +33,31 @@ export default function Published() {
   return (
     <View className="container global__fix_tabbar">
       {goods.length > 0 &&
-        goods.map(({ img, goodId, content }) => {
+        goods.map(({ img, goodId, content, avatarUrl, nickName, price }) => {
           return (
             <View onClick={() => toDetails(goodId)}>
-              <Good img={img[0]} content={content}></Good>
+              <Good
+                img={img[0]}
+                nickName={nickName}
+                avatarUrl={avatarUrl}
+                price={price}
+                content={content}
+              ></Good>
             </View>
           );
         })}
-      <Button
+      {/* <Button
         className="button"
         variant="contained"
-        color="primary"
         shape="round"
         onClick={pubilsh}
       >
         发布
-      </Button>
+      </Button> */}
+      <View className="button" onClick={pubilsh}>
+        <View className="btn-icon">
+        </View>
+      </View>
     </View>
   );
 }

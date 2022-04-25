@@ -7,8 +7,9 @@
     font-size: 12Px;
     height: 60Px;
     border-radius: 30Px 12Px 12Px 30Px;
-    backdrop-filter: blur(16Px) saturate(180%);
-    background-color: rgba(163, 143, 143, 0.006);
+    background: red;
+    // backdrop-filter: blur(16Px) saturate(180%);
+    // background-color: rgba(163, 143, 143, 0.006);
 }
 .avatar{
     width: 60Px;

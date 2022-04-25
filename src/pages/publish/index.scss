@@ -1,5 +1,9 @@
 .container{
+    display: flex;
     position: absolute;
+    box-sizing: border-box;
+    width: 100vw;
+    flex-direction: column;
     padding:50px;
     .cancel{
         position: absolute;
@@ -10,11 +14,27 @@
         margin-bottom: 50px;
         font-size: 30px;
     }
+    .uploader{
+        margin-bottom: 120px;
+    }
+    .input{
+        height: 80px;
+        background-color: #fff;
+        box-sizing: border-box;
+        padding: 16px 10px;
+        border-radius: 10px;
+        border: 1px solid #ECECEC;
+    }
+
     .button{
         position: fixed;
+        width: 450px;
+        // height: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc(10Px + env(safe-area-inset-bottom));
         background: #5463FF;
         color: #ECECEC;
-        bottom: 0;
-        left: 0;
+        
     }
 }

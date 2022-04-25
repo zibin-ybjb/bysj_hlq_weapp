@@ -1,11 +1,61 @@
-.container{
-    padding: 25rpx;
-    display: flex;
-    flex-wrap: wrap;
-    .button{
-        position: fixed;
-        height: 24Px;
-        right: 20px;
-        bottom: calc(120px + env(safe-area-inset-bottom));
+.container {
+  padding: 25rpx;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: calc(150px + env(safe-area-inset-bottom));
+
+
+  .button {
+    position: fixed;
+    height: 40Px;
+    width: 40Px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+
+    border-radius: 50%;
+    right: 20px;
+    bottom: calc(150px + env(safe-area-inset-bottom));
+
+    background-color: rgba(17, 25, 40, 0.23);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1Px solid rgba(255, 255, 255, 0.125);
+
+    .btn-icon {
+      position: absolute;
+      background: red;
+      // width: 2Px;
+      // height: 2Px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
+
+    .btn-icon::before {
+      content: "";
+      display: block;
+      background: #5463FF;
+      width: 20Px;
+      height: 4Px;
+      border-radius: 2Px;
+      position: absolute;
+      top: -2Px;
+      left: -10Px;
+
+    }
+
+    .btn-icon::after {
+      content: "";
+      display: block;
+      background: #5463FF;
+      width: 20Px;
+      height: 4Px;
+      border-radius: 2Px;
+      position: absolute;
+      top: -2Px;
+      left: -10Px;
+      transform: rotate(90deg);
+
+    }
+  }
 }

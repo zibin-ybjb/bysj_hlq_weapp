@@ -5,6 +5,7 @@ import "./index.scss";
 import { useEffect, useState } from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { useDispatch, useSelector } from "react-redux";
+import { isSigned } from "../../utils/utils";
 
 const db = Taro.cloud.database();
 
@@ -27,6 +28,8 @@ export default function Login() {
   const { isLogin } = useSelector((state) => state.user);
   const [userInfo, setUserInfo] = useState<UserInfo>();
 
+  const [isRegist ,setRegist] = useState<Boolean>(false);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [number, setNumber] = useState("");
@@ -36,27 +39,44 @@ export default function Login() {
   const dispatch = useDispatch();
 
   useDidShow(() => {
-    Taro.cloud
-      .callFunction({
-        name: "getopenid",
-      })
-      .then((res) => {
-        console.log(res);
-        let { openid } = res.result;
-        db.collection("hlq-userinfo")
-          .where({
-            _openid: openid,
-          })
-          .get()
-          .then((res) => {
-            console.log(res.data[0]);
-            Taro.setStorageSync("info", res.data[0]);
-            dispatch({ type: "REQUESTLOGINSUCCESS" });
-            Taro.switchTab({ url :'../../tab-pages/index/index'});
-          });
-      });
+    isSigned().then((res) => {
+      console.log(res);
+      setRegist(true);
+        Taro.setStorageSync("userInfo", res);
+        dispatch({ type: "REQUESTLOGINSUCCESS" });
+        // const { name, phone, number ,value } = res;
+        setName(res.userName);
+        setPhone(res.phone);
+        setNumber(res.number);
+        setValue(res.schoolArea);
+        const { _openid, _id, ...rest} = res;
+        setUserInfo(rest);
+    }).catch(()=>{
+
+    })
+    // Taro.cloud
+    //   .callFunction({
+    //     name: "getopenid",
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     let { openid } = res.result;
+    //     db.collection("hlq-userinfo")
+    //       .where({
+    //         _openid: openid,
+    //       })
+    //       .get()
+    //       .then((res) => {
+    //         console.log(res.data[0]);
+    //         Taro.setStorageSync("userInfo", res.data[0]);
+    //         dispatch({ type: "REQUESTLOGINSUCCESS" });
+    //         // Taro.switchTab({ url :'../../tab-pages/index/index'});
+    //       });
+    //   });
   });
-  const getUserProfile = () => [
+  const getUserProfile = () => {
+    console.log(isRegist);
+    
     Taro.getUserProfile({
       desc: "用于完善会员资料",
     })
@@ -88,8 +108,8 @@ export default function Login() {
       .catch((error) => {
         dispatch({ type: "REQUESTLOGINFAILURE" });
         console.log(error);
-      }),
-  ];
+      });
+    };
 
   return (
     <View className="index">
@@ -170,7 +190,7 @@ export default function Login() {
         size="large"
         onClick={getUserProfile}
       >
-        授权
+        {isRegist ? "修改" : "授权"}
       </Button>
     </View>
   );
