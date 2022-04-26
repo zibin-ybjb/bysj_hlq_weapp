@@ -1,13 +1,41 @@
 .custom-indicator {
+  position: absolute;
+  right: 5px * 2;
+  bottom: 5px * 2;
+  padding: 2px * 2 5px * 2;
+  font-size: 12px * 2;
+  color: #ffffff;
+  background: #0000001a;
+}
+
+.img {
+  width: 750px;
+  height: 550px;
+}
+
+.good-action {
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 8px 12px #ebedf0;
+  width: 100vw;
+  height: 120px;
+  background: #ffffff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.btn {
+
+  .btn-icon {}
+
+  .btn-text {
+    font-size: 26px;
+    margin-top: 6px;
+  }
+}
+.getWeixin{
     position: absolute;
-    right: 5px * 2;
-    bottom: 5px * 2;
-    padding: 2px * 2 5px * 2;
-    font-size: 12px * 2;
-    color: #ffffff;
-    background: #0000001a;
+    right: 20px;
 }
-.img{
-    width: 750px;
-    height: 550px;
-}
+

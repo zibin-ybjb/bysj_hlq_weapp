@@ -1,10 +1,10 @@
 $tab-selected-color: #5463FF;
 $tab-color: #ECECEC;
-.container{
-    padding: 30px;
+
+.container {
+  padding: 0 30px;
 }
 
 .global__fix_tabbar {
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
-  

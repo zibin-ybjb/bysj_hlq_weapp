@@ -18,6 +18,7 @@ export default function Publish() {
   const [userInfo, setUserInfo] = useState({});
   const [price, setPrice] = useState();
   const [positon, setPosition] = useState({});
+  const [weixin, setWeixin] = useState('');
 
   useDidShow(() => {
     //   const { top } = Taro.getMenuButtonBoundingClientRect();
@@ -96,6 +97,7 @@ export default function Publish() {
             ...pickInfo,
             content,
             price,
+            weixin,
             auditState:0,
             img: fileIds,
             goodId: getUUID(8),
@@ -155,6 +157,14 @@ export default function Publish() {
             placeholder="请输入价格"
             value={price}
             onChange={(e) => setPrice(e.detail.value)}
+          />
+        </View>
+        <View className="input">
+          <Input
+            type="digit"
+            placeholder="请输入微信"
+            value={weixin}
+            onChange={(e) => setWeixin(e.detail.value)}
           />
         </View>
 

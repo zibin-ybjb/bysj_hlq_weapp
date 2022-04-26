@@ -1,10 +1,12 @@
 .container {
-  padding: 25rpx;
+  padding: 0 25rpx;
   display: flex;
   flex-wrap: wrap;
   padding-bottom: calc(150px + env(safe-area-inset-bottom));
 
-
+  .tabs{
+    width: 700px;
+  }
   .button {
     position: fixed;
     height: 40Px;
@@ -57,5 +59,6 @@
       transform: rotate(90deg);
 
     }
+    
   }
 }

@@ -1,0 +1,40 @@
+.goodContainer {
+
+  width: 700px;
+  height: 160px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  margin: 10px 5px;
+//   background: #d7d1d1;
+  box-shadow: 0 8px 12px #ebedf0;
+  border: 1px solid rgba(163, 143, 143, 0.2);
+
+
+  .img {
+    width: 130px;
+    height: 130px;
+    box-sizing: border-box;
+    margin: 15px;
+    border-radius: 20px;
+  }
+
+  .price {
+    color: red;
+    width: 130rpx;
+    font-size: 28px;
+  }
+
+  .content {
+    flex: 1;
+    height: 120px;
+    color: #34495e;
+    font-size: 26rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+  }
+
+}

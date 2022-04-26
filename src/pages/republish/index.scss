@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  position: absolute;
+  box-sizing: border-box;
+  width: 100vw;
+  flex-direction: column;
+  padding: 50px;
+
+  .cancel {
+    position: absolute;
+    left: 8Px;
+  }
+
+  .desc {
+    height: 50px;
+    margin-bottom: 20px;
+    font-size: 30px;
+  }
+
+  .input {
+    height: 80px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 16px 10px;
+    border-radius: 10px;
+    border: 1px solid #ECECEC;
+  }
+
+  .imgArea {
+    width: 80vw;
+
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .uploader {}
+
+    .img {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  .btng {
+    position: fixed;
+    width: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(10Px + env(safe-area-inset-bottom));
+    .button {
+      width: 220px;
+      margin: 10px;
+      background: #5463FF;
+      color: #ECECEC;
+
+    }
+  }
+
+}

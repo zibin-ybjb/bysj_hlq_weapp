@@ -35,6 +35,18 @@
                     "pathName": "pages/publish/index",
                     "query": "",
                     "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "tab-pages/index/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/goodDetail/index",
+                    "query": "goodId=2btlf6j7cqdc00",
+                    "scene": null
                 }
             ]
         }

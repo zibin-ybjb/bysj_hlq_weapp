@@ -1,8 +1,8 @@
-import { Button } from "@taroify/core";
 import Taro, { navigateTo, useDidShow, useReady } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { useState } from "react";
-import Good from "../../components/good/good";
+import { Fragment, useState } from "react";
+import { Tabs } from "@taroify/core";
+import GoodControl from "../../components/goodControl";
 import "./index.scss";
 import { useDispatch } from "react-redux";
 
@@ -10,18 +10,21 @@ const db = Taro.cloud.database();
 
 export default function Published() {
   const [goods, setGoods] = useState(new Array());
+  const [value, setValue] = useState(0);
   const dispatch = useDispatch();
   useDidShow(() => {
     dispatch({ type: "SECOND" });
 
-    db.collection("goods").get()
+    db.collection("goods")
+      .orderBy("createTime", "desc")
+      .get()
       .then((res) => {
         setGoods(res.data);
       });
   });
   const toDetails = (goodId: any) => {
     navigateTo({
-      url: `../../pages/goodDetail/index?goodId=${goodId}`,
+      url: `../../pages/republish/index?goodId=${goodId}`,
     });
   };
   const pubilsh = () => {
@@ -32,31 +35,43 @@ export default function Published() {
 
   return (
     <View className="container global__fix_tabbar">
-      {goods.length > 0 &&
-        goods.map(({ img, goodId, content, avatarUrl, nickName, price }) => {
-          return (
-            <View onClick={() => toDetails(goodId)}>
-              <Good
-                img={img[0]}
-                nickName={nickName}
-                avatarUrl={avatarUrl}
-                price={price}
-                content={content}
-              ></Good>
-            </View>
-          );
-        })}
-      {/* <Button
-        className="button"
-        variant="contained"
-        shape="round"
-        onClick={pubilsh}
-      >
-        发布
-      </Button> */}
+      <Tabs className="tabs" value={value} onChange={setValue}>
+        <Tabs.TabPane title="在卖">
+          {goods.length > 0 &&
+            goods.filter((item)=>item.auditState != 3).map(
+              ({ img, goodId, content, avatarUrl, nickName, price }) => {
+                return (
+                  <View key={goodId} onClick={() => toDetails(goodId)}>
+                    <GoodControl
+                      img={img[0]}
+                      price={price}
+                      content={content}
+                    ></GoodControl>
+                  </View>
+                );
+              }
+            )}
+        </Tabs.TabPane>
+        <Tabs.TabPane title="已下架">
+        {goods.length > 0 &&
+            goods.filter((item)=>item.auditState == 3).map(
+              ({ img, goodId, content, avatarUrl, nickName, price }) => {
+                return (
+                  <View key={goodId} onClick={() => toDetails(goodId)}>
+                    <GoodControl
+                      img={img[0]}
+                      price={price}
+                      content={content}
+                    ></GoodControl>
+                  </View>
+                );
+              }
+            )}
+        </Tabs.TabPane>
+      </Tabs>
+
       <View className="button" onClick={pubilsh}>
-        <View className="btn-icon">
-        </View>
+        <View className="btn-icon"></View>
       </View>
     </View>
   );

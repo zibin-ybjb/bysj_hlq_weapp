@@ -7,6 +7,7 @@ export default defineAppConfig({
     "tab-pages/my/index",
 
     "pages/publish/index",
+    "pages/republish/index",
     "pages/goodDetail/index",
     "pages/login/index"
   ],
