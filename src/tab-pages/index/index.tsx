@@ -1,6 +1,11 @@
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
-import Taro, { navigateTo, useDidShow, useReady } from "@tarojs/taro";
+import Taro, {
+  navigateTo,
+  useDidShow,
+  usePullDownRefresh,
+  useReady,
+} from "@tarojs/taro";
 import Good from "../../components/good/good";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,28 +14,37 @@ export default function Index() {
   const { isLogin } = useSelector((state) => state.user);
   const [goods, setGoods] = useState(new Array());
   const dispatch = useDispatch();
-  useDidShow(() => {
-    dispatch({ type: "FIRST" });
-    console.log(isLogin);
-
-    Taro.cloud
+  const fetchData = async () => {
+    return await Taro.cloud
       .callFunction({
         name: "getgoodlist",
         data: {
           start: 0,
           count: 20,
-          fromWeapp: true
+          fromWeapp: true,
         },
       })
       .then((res) => {
         setGoods(res.result.data);
       });
+  };
+  useDidShow(() => {
+    dispatch({ type: "FIRST" });
+    console.log(isLogin);
+
+    fetchData();
     // if(isLogin){
     //   Taro.redirectTo({
     //     url:'../../pages/login/index'
     //   })
     // }
   });
+  usePullDownRefresh(() => {
+    fetchData().then(() => {
+      Taro.stopPullDownRefresh();
+    });
+  });
+
   useEffect(() => {});
   const toDetails = (goodId: any) => {
     navigateTo({

@@ -1,16 +1,17 @@
 import { View, Text, Button } from "@tarojs/components";
 // import { chooseImage } from "@tarojs/taro";
 import { useEffect, useState } from "react";
-import { Swiper, Image, Button as Button1 } from "@taroify/core";
+import { Swiper, Image, Button as Button1, Notify } from "@taroify/core";
 import Taro, { useDidShow, useRouter, useShareAppMessage } from "@tarojs/taro";
 import "./index.scss";
-import { ShareOutlined } from "@taroify/icons";
+import { ShareOutlined, LikeOutlined } from "@taroify/icons";
 import Avatar from "@taroify/core/avatar/avatar";
 
 const db = Taro.cloud.database();
 const _ = db.command;
 
 export default (props) => {
+  const [notify, setNotify] = useState(false);
   const [value, setValue] = useState(0);
   const [detail, setDetail] = useState({});
   const router = useRouter();
@@ -46,16 +47,28 @@ export default (props) => {
     });
   };
 
+  const addCollection = () => {
+    db.collection("hlq-collection").add({
+      data:{
+        goodId:detail.goodId
+      }
+    }).then(()=>{
+      setNotify(true);
+    })
+    
+  };
+
   return (
     <View
       className="container"
-      style={{ padding: "0px 6px", background: "#f7f8fa", height:'100vh' }}
+      style={{ padding: "0px 6px", background: "#f7f8fa", height: "100vh" }}
     >
+      <Notify color="success" duration={1000} open={notify} onClose={setNotify}>
+        收藏成功
+      </Notify>
       <View className="container1">
         {/* <Avatar className="avatar" src={userInfo.avatarUrl} size="large" /> */}
-        <View className="userInfo">
-          {/* <View>{detail.nickName}</View> */}
-        </View>
+        <View className="userInfo">{/* <View>{detail.nickName}</View> */}</View>
       </View>
 
       <Swiper autoplay={4000} onChange={setValue}>
@@ -77,9 +90,7 @@ export default (props) => {
         </Swiper.Indicator>
       </Swiper>
 
-      <View>
-        {detail.content}
-      </View>
+      <View>{detail.content}</View>
 
       <View className="good-action">
         <Button
@@ -87,7 +98,7 @@ export default (props) => {
           openType="share"
           style={{
             position: "absolute",
-            left: 0,
+            left: "10rpx",
             border: "none",
             background: "transparent",
             display: "flex",
@@ -102,19 +113,38 @@ export default (props) => {
           <ShareOutlined className="btn-icon" />
           <Text className="btn-text">分享</Text>
         </Button>
+        <Button
+          className="btn"
+          style={{
+            position: "absolute",
+            left: "130rpx",
+            border: "none",
+            background: "transparent",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "120rpx",
+            width: "120rpx",
+          }}
+          plain={true}
+          onClick={() => addCollection()}
+        >
+          <LikeOutlined className="btn-icon" />
+          <Text className="btn-text">收藏</Text>
+        </Button>
+
         <Button1
           className="getWeixin"
           variant="contained"
           color="primary"
           shape="round"
-
-          onClick={()=>{
+          onClick={() => {
             Taro.setClipboardData({
-              data:detail.weixin
-            }).then(()=>{
+              data: detail.weixin,
+            }).then(() => {
               console.log(111);
-              
-            })
+            });
           }}
         >
           获取联系方式

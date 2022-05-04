@@ -14,7 +14,7 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "pages/publish/publish",
+                    "pathName": "tab-pages/index/index",
                     "query": "",
                     "scene": null
                 },
@@ -46,6 +46,24 @@
                     "name": "",
                     "pathName": "pages/goodDetail/index",
                     "query": "goodId=2btlf6j7cqdc00",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/login/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "tab-pages/my/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/collection/index",
+                    "query": "",
                     "scene": null
                 }
             ]

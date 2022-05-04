@@ -9,7 +9,8 @@ export default defineAppConfig({
     "pages/publish/index",
     "pages/republish/index",
     "pages/goodDetail/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/collection/index",
   ],
   tabBar: {
     "custom": true,

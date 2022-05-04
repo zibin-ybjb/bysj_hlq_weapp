@@ -1,5 +1,5 @@
 import { View, Text, Image } from "@tarojs/components";
-import Taro, { useDidShow, useReady } from "@tarojs/taro";
+import Taro, { useDidShow, useReady, navigateTo } from "@tarojs/taro";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Button } from "@taroify/core";
@@ -29,6 +29,11 @@ export default function my(props) {
       });
     setPosition(Taro.getMenuButtonBoundingClientRect());
   });
+  const toDetails = () => {
+    navigateTo({
+      url: `../../pages/collection/index`,
+    });
+  };
 
   const toLogin = () => {
     Taro.redirectTo({
@@ -43,6 +48,13 @@ export default function my(props) {
           <UserInfoShow userInfo={userInfo}></UserInfoShow>
         </View>
       )}
+
+      <View
+        className="my-list-item"
+        onClick={() => toDetails()}
+      >
+        <Text>我的收藏</Text>
+      </View>
     </View>
   );
 }

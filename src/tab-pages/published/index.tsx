@@ -1,4 +1,9 @@
-import Taro, { navigateTo, useDidShow, useReady } from "@tarojs/taro";
+import Taro, {
+  navigateTo,
+  useDidShow,
+  usePullDownRefresh,
+  useReady,
+} from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { Fragment, useState } from "react";
 import { Tabs } from "@taroify/core";
@@ -12,16 +17,30 @@ export default function Published() {
   const [goods, setGoods] = useState(new Array());
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
-  useDidShow(() => {
-    dispatch({ type: "SECOND" });
-
-    db.collection("goods")
+  const fetchData = async () => {
+    return await db.collection("goods")
       .orderBy("createTime", "desc")
       .get()
       .then((res) => {
+        console.log(res);
         setGoods(res.data);
       });
+  };
+  useDidShow(() => {
+    fetchData();
+    dispatch({ type: "SECOND" });
   });
+  usePullDownRefresh(() => {
+    // Taro.startPullDownRefresh({
+    //   complete: () => {
+        fetchData().then(()=>{
+          Taro.stopPullDownRefresh();
+        })
+
+    //   },
+    // });
+  });
+
   const toDetails = (goodId: any) => {
     navigateTo({
       url: `../../pages/republish/index?goodId=${goodId}`,
@@ -38,8 +57,9 @@ export default function Published() {
       <Tabs className="tabs" value={value} onChange={setValue}>
         <Tabs.TabPane title="在卖">
           {goods.length > 0 &&
-            goods.filter((item)=>item.auditState != 3).map(
-              ({ img, goodId, content, avatarUrl, nickName, price }) => {
+            goods
+              .filter((item) => item.auditState != 3)
+              .map(({ img, goodId, content, avatarUrl, nickName, price }) => {
                 return (
                   <View key={goodId} onClick={() => toDetails(goodId)}>
                     <GoodControl
@@ -49,13 +69,13 @@ export default function Published() {
                     ></GoodControl>
                   </View>
                 );
-              }
-            )}
+              })}
         </Tabs.TabPane>
         <Tabs.TabPane title="已下架">
-        {goods.length > 0 &&
-            goods.filter((item)=>item.auditState == 3).map(
-              ({ img, goodId, content, avatarUrl, nickName, price }) => {
+          {goods.length > 0 &&
+            goods
+              .filter((item) => item.auditState == 3)
+              .map(({ img, goodId, content, avatarUrl, nickName, price }) => {
                 return (
                   <View key={goodId} onClick={() => toDetails(goodId)}>
                     <GoodControl
@@ -65,8 +85,7 @@ export default function Published() {
                     ></GoodControl>
                   </View>
                 );
-              }
-            )}
+              })}
         </Tabs.TabPane>
       </Tabs>
 
